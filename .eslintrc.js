@@ -16,7 +16,9 @@ module.exports = {
         'indent': 'off',
         'semi': 'off',
         'comma-dangle': 'off',
-        'require-jsdoc': 'off'
+        'require-jsdoc': 'off',
+        'operator-linebreak': 'off',
+        'no-unused-vars': 'off',
     }
 }
 
