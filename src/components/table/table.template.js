@@ -3,24 +3,36 @@ const CODES = {
     Z: 90
 }
 
-function toCell(selected = false) {
+function toCell(colStr, selected = false) {
     return `
-        <div class="cell ${selected ? 'selected' : ''}" contenteditable></div>
+        <div 
+            class="cell ${selected ? 'selected' : ''}" 
+            data-cell-col="${colStr}"
+            contenteditable>
+        </div>
     `;
 }
 
 function toColumn(col) {
     return `
-        <div class="column">
+        <div class="column" data-type="resizable">
             ${col}
+            <div class="col-resize" data-resize="col"></div>
         </div>
     `;
 }
 
 function createRow(info, content) {
+    const resizer = info
+        ? '<div class="row-resize" data-resize="row"></div>'
+        : '';
+
     return `
         <div class="row">
-            <div class="row-info">${info}</div>
+            <div class="row-info">
+                ${info}
+                ${resizer}
+            </div>
             <div class="row-data">${content}</div>
         </div>
     `;
@@ -45,7 +57,10 @@ export function createTable(rowSel = 1, colSel = 1, rowsCount = 15) {
 
     for (let i = 1; i <= rowsCount; i++) {
         const toCellSelected = (_, colIndex) =>
-            toCell(rowSel == i && colSel == colIndex + 1);
+            toCell(
+                toChar(_, colIndex),
+                rowSel == i && colSel == colIndex + 1
+            );
 
         const row = createRow(
             i,
