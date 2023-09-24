@@ -3,10 +3,11 @@ const CODES = {
     Z: 90
 }
 
-function toCell(colStr, selected = false) {
+function toCell(rowNum, colStr, selected = false) {
     return `
         <div 
             class="cell ${selected ? 'selected' : ''}" 
+            data-cell-row="${rowNum}"
             data-cell-col="${colStr}"
             contenteditable>
         </div>
@@ -28,7 +29,7 @@ function createRow(info, content) {
         : '';
 
     return `
-        <div class="row">
+        <div class="row" data-type="resizable">
             <div class="row-info">
                 ${info}
                 ${resizer}
@@ -58,6 +59,7 @@ export function createTable(rowSel = 1, colSel = 1, rowsCount = 15) {
     for (let i = 1; i <= rowsCount; i++) {
         const toCellSelected = (_, colIndex) =>
             toCell(
+                i,
                 toChar(_, colIndex),
                 rowSel == i && colSel == colIndex + 1
             );
