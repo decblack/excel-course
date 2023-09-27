@@ -24,6 +24,18 @@ export class Table extends ExcelComponent {
             const $resizer = $(event.target);
             const $parent = $resizer.closest('[data-type="resizable"]');
             const coords = $parent.getCoords();
+            let insideMousemove = false;
+            const mousemoveIntervalMS = 50;
+
+            // trigger to reduce mousemove handling
+            const setMousemoveInsideTrigger = () => {
+                insideMousemove = true;
+                setTimeout(
+                    () => insideMousemove = false,
+                    mousemoveIntervalMS
+                );
+            }
+
 
             if ($resizer.$el.classList.contains('col-resize')) {
                 // resize column
@@ -35,13 +47,21 @@ export class Table extends ExcelComponent {
                 });
                 $resizer.height((cellsHeightSum ) + 'px');
 
+                // optimizaition 1: cache elements to resize
+                const elements = $(cellsSelector).elements();
+
+
                 document.onmousemove = (e) => {
+                    if (insideMousemove === true) return;
+                    // optimizaition 2: trigger to reduce mousemove handling
+                    setMousemoveInsideTrigger();
+
                     const delta = Math.floor(e.pageX - coords.right);
                     const newWidth = coords.width + delta;
 
                     $parent.width(newWidth + 'px');
 
-                    $(cellsSelector).each((nextElement) => {
+                    elements.forEach((nextElement) => {
                         $(nextElement).width(newWidth + 'px');
                     });
 
@@ -50,6 +70,10 @@ export class Table extends ExcelComponent {
             } else {
                 // resize row
                 document.onmousemove = (e) => {
+                    if (insideMousemove === true) return;
+                    // optimizaition 2: trigger to reduce mousemove handling
+                    setMousemoveInsideTrigger();
+
                     const delta = Math.floor(e.pageY - coords.bottom);
                     const newHeight = coords.height + delta;
 

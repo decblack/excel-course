@@ -15,6 +15,10 @@ class Dom {
         });
     }
 
+    elements() {
+        return this.$els;
+    }
+
     html(html) {
         if (typeof html === 'string') {
             this.$el.innerHTML = html;
