@@ -47,13 +47,13 @@ export class Table extends ExcelComponent {
                 });
                 $resizer.height((cellsHeightSum ) + 'px');
 
-                // optimizaition 1: cache elements to resize
+                // optimization 1: cache elements to resize
                 const elements = $(cellsSelector).elements();
 
 
                 document.onmousemove = (e) => {
                     if (insideMousemove === true) return;
-                    // optimizaition 2: trigger to reduce mousemove handling
+                    // optimization 2: trigger to reduce mousemove handling
                     setMousemoveInsideTrigger();
 
                     const delta = Math.floor(e.pageX - coords.right);
@@ -71,7 +71,7 @@ export class Table extends ExcelComponent {
                 // resize row
                 document.onmousemove = (e) => {
                     if (insideMousemove === true) return;
-                    // optimizaition 2: trigger to reduce mousemove handling
+                    // optimization 2: trigger to reduce mousemove handling
                     setMousemoveInsideTrigger();
 
                     const delta = Math.floor(e.pageY - coords.bottom);
