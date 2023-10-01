@@ -86,6 +86,15 @@ class Dom {
             return this;
         }
     }
+
+    data(key, value) {
+        if (value === undefined) {
+            return this.$el.dataset[key];
+        } else {
+            this.$el.dataset[key] = value;
+            return this;
+        }
+    }
 }
 
 export function $(selector) {

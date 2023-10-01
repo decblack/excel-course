@@ -34,10 +34,12 @@ export class Table extends ExcelComponent {
                     () => insideMousemove = false,
                     mousemoveIntervalMS
                 );
-            }
+            };
+
+            const resizeType = $resizer.data('resize');
 
 
-            if ($resizer.$el.classList.contains('col-resize')) {
+            if (resizeType === 'col') {
                 // resize column
                 const cellsSelector =
                     `[data-cell-col="${$parent.$el.innerText}"]`;
