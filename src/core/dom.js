@@ -95,6 +95,13 @@ class Dom {
             return this;
         }
     }
+
+    css(styles = {}) {
+        // eslint-disable-next-line guard-for-in
+        for (const style in styles) {
+            this.$el.style[style] = styles[style];
+        }
+    }
 }
 
 export function $(selector) {
