@@ -19,6 +19,7 @@ module.exports = {
         'require-jsdoc': 'off',
         'operator-linebreak': 'off',
         'no-unused-vars': 'off',
+        'no-debugger': 'off'
     }
 }
 
